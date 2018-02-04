@@ -18,4 +18,6 @@ Given *PUBG*'s potential as an eSport, I decided to investigate: can we predict 
 
 ### Data Collection
 
-Lucky for me, a number of websites exist which keep track of *PUBG* player performance statistics. I decided to go with [pubgtracker.com](https://pubgtracker.com/).
+Lucky for me, a number of websites exist which keep track of *PUBG* player performance statistics. I decided to go with [pubgtracker.com](https://pubgtracker.com/) as a source to scrape player statistics from. Out of 27 million players, the website had statistics on 11,000,000. To limit my search due to time constraints for scraping, I decided to limit my search to North American servers coupled with the Solo 3rd Person game mode. This brought my top 10% search to about 19,000 players.
+
+Data features on each player included three classifications. The first was behavior within a round, like many kills and heals a player had as well as distance walked across all rounds and on average, for example. The second was "best of" stats across all rounds, lik
