@@ -38,7 +38,7 @@ In order to have an easier time running my regression, I didn't bother scraping 
 
 ### Exploratory Data Analysis
 
-With a **mean *win-rate* of 5.97%** and a **median of 2.63%**, the data clearly shows that winning a round of PUBG is difficult even for the top 10% of PUBG players. Luckily for my analysis, it's apparent that winning PUBG isn't random chance - every feature had a relationship with *win-rate*. For example, *kill-per-game* had a positive correlation with *win-rate*, as pictured here:
+With a **mean *win-rate* of 5.97%** and a **median of 2.63%**, the data clearly shows that winning a round of *PUBG* is difficult even for the top 10% of *PUBG* players. Luckily for my analysis, it's apparent that winning *PUBG* isn't random chance - every feature had a relationship with *win-rate*. For example, *kill-per-game* had a positive correlation with *win-rate*, as pictured here:
 
 ![](https://github.com/JeremyLyleBrown/JeremyLyleBrown.github.io/blob/master/images/media-20180205%20(1).png?raw=true "kills-per-game vs win-rate")
 
@@ -46,4 +46,26 @@ Additionally, *heals-per-game* had a negative correlation with *win-rate*:
 
 ![](https://github.com/JeremyLyleBrown/JeremyLyleBrown.github.io/blob/master/images/media-20180205.png?raw=true "heals-per-game vs win-rate")
 
+It's noteworthy that many of my features were correlated with one another, but none too highly to warrant removing them. I'd eventually let [scikit-learn](http://scikit-learn.org/stable/index.html)'s regularization methods take care of potential errors here.
+
 ### Modelling Process
+
+For my own learning, I decided to run my model with incremental corrections, arriving at a more accurate model by the end of the process.
+
+I began with Ordinary Least Squares linear regression run through [statsmodels](https://pypi.python.org/pypi/statsmodels), without any sort of test/train split or cross-validation. I arrived at an r^2 of 7.39 (same for adjusted r^2, so it seemed that there was little-to-no penalization for excessive features). I then manually pruned out features with high p-values, getting rid of *damage-dealt (total)*, *kills (total)*, *most-kills-in-a-round*, and *vehicle-destroys (total)*. Manually removing these features and re-running the model didn't result in any improvement to the r^2 score.
+
+I then ran OLS with a test/train split in the data, and got an r^2 of 7.31. Nest, I ran OLS with cross-validation and automatic feature selection based on p-values through scikit-learn, and ended up with an r^2 of 7.33. This more rigorous methodology didn't vastly reduce my model's score, but it did a little bit, and it was more correct.
+
+Regularization to the rescue! I used Ridge cross-validation regression and got an r^2 of 7.32 - not an improvement. But running Lasso regression resulted in an r^2 of 7.48. This wasn't a significant improvement, but it was an improvement of sorts, and I was able to determine that the 3 most significant features affecting the model were *rounds-played*, *kills-per-game*, and *damage-dealt-per-game*.
+
+To check that the regression is linear and that errors are evenly distributed, I plotted my residuals:
+![](https://github.com/JeremyLyleBrown/JeremyLyleBrown.github.io/blob/master/images/media-20180205%20(2).png?raw=true "residuals plot")
+Great! No evidence of heteroskedasticity and the errors indeed appear to be evenly distributed.
+
+### Conclusions
+
+With my final model, I was able to predict the *win-rate* of the very good to the very best of *PUBG* players. This model can be useful for eSports teams looking to identify top-performing players to add to their roster.
+
+I'd definitely like to run this project again by collecting data on more players across more regions and in more game modes. It's likely that performance in one game made can have an effect on performance in another, and given more time and processing power, I would have collected these stats. With more data, hopefully I can get a higher performing model, though I am pleased with the result I was able to achieve.
+
+Here's a [link](https://github.com/JeremyLyleBrown/Metis_Project02) to the project repo on Github. Thanks for reading!
