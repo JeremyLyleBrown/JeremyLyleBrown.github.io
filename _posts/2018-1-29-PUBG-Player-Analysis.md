@@ -34,7 +34,16 @@ Because the data on each players' page was begin generated with JavaScript, I de
 
 Now that I had my 19,000 datapoints, I used [Pandas](https://pandas.pydata.org/) for the both cleaning and analysis. Lucky for me, my data was quite clean from the start - no missing points, standardized format within columns, and no duplicate entries. After some datatype conversion and unit standardization for times and distances, I was ready to work with my data.
 
-In order to have an easier time running my regression, I didn't bother scraping ratios from the leaderboards, and calculated them myself. *Win-rate* and other ratios on the leaderboards were rounded to the nearest tenth, whereas I wanted as much decimal place precision as possible.
+In order to have an easier time running my regression, I didn't bother scraping ratios from the leaderboards, and calculated them myself. *Win-rate* and other ratios on the leaderboards were rounded to the nearest tenth, whereas I wanted as much decimal place precision as possible. I ended up with 30 total features per player.
 
 ### Exploratory Data Analysis
 
+With a **mean *win-rate* of 5.97%** and a **median of 2.63%**, the data clearly shows that winning a round of PUBG is difficult even for the top 10% of PUBG players. Luckily for my analysis, it's apparent that winning PUBG isn't random chance - every feature had a relationship with *win-rate*. For example, *kill-per-game* had a positive correlation with *win-rate*, as pictured here:
+
+![](https://github.com/JeremyLyleBrown/JeremyLyleBrown.github.io/blob/master/images/media-20180205%20(1).png?raw=true "kills-per-game vs win-rate")
+
+Additionally, *heals-per-game* had a negative correlation with *win-rate*:
+
+![](https://github.com/JeremyLyleBrown/JeremyLyleBrown.github.io/blob/master/images/media-20180205.png?raw=true "heals-per-game vs win-rate")
+
+### Modelling Process
