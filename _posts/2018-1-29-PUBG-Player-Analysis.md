@@ -54,7 +54,7 @@ For my own learning, I decided to run my model with incremental corrections, arr
 
 I began with Ordinary Least Squares linear regression run through [statsmodels](https://pypi.python.org/pypi/statsmodels), without any sort of test/train split or cross-validation. I arrived at an r^2 of 7.39 (same for adjusted r^2, so it seemed that there was little-to-no penalization for excessive features). I then manually pruned out features with high p-values, getting rid of *damage-dealt (total)*, *kills (total)*, *most-kills-in-a-round*, and *vehicle-destroys (total)*. Manually removing these features and re-running the model didn't result in any improvement to the r^2 score.
 
-I then ran OLS with a test/train split in the data, and got an r^2 of 7.31. Nest, I ran OLS with cross-validation and automatic feature selection based on p-values through scikit-learn, and ended up with an r^2 of 7.33. This more rigorous methodology didn't vastly reduce my model's score, but it did a little bit, and it was more correct.
+I then ran OLS with a test/train split in the data, and got an r^2 of 7.31. Next, I ran OLS with cross-validation and automatic feature selection based on p-values through scikit-learn, and ended up with an r^2 of 7.33. This more rigorous methodology didn't vastly reduce my model's score, but it did a little bit, and it was more correct.
 
 Regularization to the rescue! I used Ridge cross-validation regression and got an r^2 of 7.32 - not an improvement. But running Lasso regression resulted in an r^2 of 7.48. This wasn't a significant improvement, but it was an improvement of sorts, and I was able to determine that the 3 most significant features affecting the model were *rounds-played*, *kills-per-game*, and *damage-dealt-per-game*.
 
